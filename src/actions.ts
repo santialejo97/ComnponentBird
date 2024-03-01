@@ -1,6 +1,6 @@
 import { action } from "@prismatic-io/spectral";
 import * as env from "dotenv";
-import * as axios from "axios";
+import  axios from "axios";
 
 env.config();
 
@@ -10,18 +10,26 @@ export const getTemplates = action({
     description: "Devuelve un listado de plantillas de Bird",
   },
   perform: async (context) => {
-    const url = process.env.URL || "";
-    const token = process.env.TOKEN || "";
-    const http = axios.default;
-    const data = await http
+    const url =  "https://integrations.messagebird.com/v3/platforms/whatsapp/templates";
+    const token = "AccessKey huVOxZhd7FesrirBseoUwOrc0"
+    const response= await axios
       .get(url, {
         headers: { Authorization: token },
       })
-      .then((data) => {
-        return;
+      const list = response.data.items.map((element: any) =>{
+        return {
+          components: element.components,
+          name:element.name,
+          status:element.status,
+          language:element.language, 
+          category:element.category
+      }
       });
-
-    return data;
+      const  listTemplate = {
+        provider: "Bird",
+        list
+      };
+    return Promise.resolve({data: listTemplate});
   },
   inputs: {},
 });

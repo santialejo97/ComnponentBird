@@ -7,7 +7,7 @@ export default component({
   display: {
     label: "Bird",
     description: "component para hacer consulta de plantillas de bird",
-    iconPath: "icon.png",
+    iconPath: "iconoMessageBird.png",
   },
   actions,
 });
